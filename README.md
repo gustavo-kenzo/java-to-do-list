@@ -23,7 +23,7 @@ Um aplicativo de console em Java para gerenciar tarefas, com suporte a adicionar
 - `src/model/services/GerenciadorTarefas.java`: Gerencia a lista de tarefas.
 
 ## Tecnologias
-- Java 17+
+- ![Java](https://img.shields.io/badge/Java-17+-blue)
 - Git para controle de versão
 
 ## Contribuições
