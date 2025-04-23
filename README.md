@@ -11,10 +11,12 @@ Um aplicativo de console em Java para gerenciar tarefas, com suporte a adicionar
 - Tratamento robusto de erros com exceções.
 
 ## Como Executar
-1. Clone o repositório: `git clone https://github.com/seu-usuario/to-do-list.git`
+1. Clone o repositório: `git clone https://github.com/seu-usuario/to-do-list.git` ou baixe o arquivo zip do projeto
 2. Navegue até a pasta: `cd to-do-list`
-3. Compile o projeto: `javac src/application/Program.java`
-4. Execute: `java -cp src application.Program`
+3. Compile o projeto: `PowerShell` javac -d xxxx (Get-ChildItem -Recurse -Filter *.java -Path src | ForEach-Object { $_.FullName })
+                      `Windows CMD` javac -d xxxx src\application\program.java src\model\entities\*.java src\model\enums\*.java src\model\services\*.java
+5. Execute: `java -cp xxxx application.Program`
+   
 
 ## Estrutura do Projeto
 - `src/application/Program.java`: Ponto de entrada com o menu interativo.
