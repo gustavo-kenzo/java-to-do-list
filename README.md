@@ -14,8 +14,8 @@ Um aplicativo de console em Java para gerenciar tarefas, com suporte a adicionar
 1. Clone o repositório: `git clone https://github.com/seu-usuario/to-do-list.git` ou baixe o arquivo zip do projeto
 2. Navegue até a pasta: `cd to-do-list`
 3. Compile o projeto:
-    *`PowerShell` javac -d xxxx (Get-ChildItem -Recurse -Filter *.java -Path src | ForEach-Object { $_.FullName })
-    *`Windows CMD` javac -d xxxx src\application\program.java src\model\entities\*.java src\model\enums\*.java src\model\services\*.java
+      -`PowerShell` javac -d xxxx (Get-ChildItem -Recurse -Filter *.java -Path src | ForEach-Object { $_.FullName })
+      -`Windows CMD` javac -d xxxx src\application\program.java src\model\entities\*.java src\model\enums\*.java src\model\services\*.java
 5. Execute: `java -cp xxxx application.Program`
 
 **OBS: xxxx : nome da pasta destino dos aquivos compilados da pasta src
