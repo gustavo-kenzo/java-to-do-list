@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 import model.dao.DaoFactory;
 import model.dao.TarefaDao;
-import model.entities.Tarefa;
-import model.services.GerenciadorTarefas;
 
 public class Program2 {
 
