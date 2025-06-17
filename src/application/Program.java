@@ -21,6 +21,7 @@ public class Program {
 				codigo = sc.nextInt();
 				sc.nextLine();
 				OpcaoMenu escolha = OpcaoMenu.fromCodigo(codigo);
+				System.out.println();
 
 				switch (escolha) {
 				case ADICIONAR:
@@ -62,10 +63,20 @@ public class Program {
 		}
 	}
 
+//adicionar funcao de descricao 👍 OBS: caso o usuario deseje add apenas titulo, devera pressionar enter se nao quiser ter descricao
 	public static void adicionar(Scanner sc, GerenciadorTarefas gerenciador) {
-		System.out.print("Digite a descrição da tarefa: ");
+		System.out.println("Informações da tarefa: ");
+		System.out.print("Título: ");
+		String nomeTarefa = sc.nextLine();
+		System.out.print("Descrição: ");
 		String descricao = sc.nextLine();
-		gerenciador.adicionarTarefa(descricao);
+		if (descricao == null || descricao.isBlank()) {
+			gerenciador.adicionarTarefa(nomeTarefa);
+		}
+		else {
+
+			gerenciador.adicionarTarefa(nomeTarefa, descricao);
+		}
 		System.out.println("Tarefa adicionada!\n");
 	}
 
@@ -75,6 +86,7 @@ public class Program {
 		System.out.println("Tarefa concluída!\n");
 	}
 
+//tarefa continua ser removida por id, mas agora é o id do banco de dados
 	public static void remover(Scanner sc, GerenciadorTarefas gerenciador) {
 		System.out.print("Digite o número da tarefa: ");
 		gerenciador.removerTarefa(sc.nextInt() - 1);

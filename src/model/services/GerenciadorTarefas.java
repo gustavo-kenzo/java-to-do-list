@@ -8,19 +8,22 @@ import model.entities.Tarefa;
 public class GerenciadorTarefas {
 	private List<Tarefa> tarefas = new ArrayList<>();
 
-	public void adicionarTarefa(String descricao) throws IllegalArgumentException {
-		tarefas.add(new Tarefa(descricao));
+	public void adicionarTarefa(String nomeTarefa) throws IllegalArgumentException {
+		tarefas.add(new Tarefa(nomeTarefa));
+	}
+	public void adicionarTarefa(String nomeTarefa, String descricao) throws IllegalArgumentException {
+		tarefas.add(new Tarefa(nomeTarefa,descricao));
 	}
 
 	public String listarTarefas() {
 		if (tarefas.isEmpty()) {
 			return "\nNão há tarefas\n";
 		}
-		StringBuilder pendentes = new StringBuilder("\nTAREFAS PENDENTES:\n");
+		StringBuilder pendentes = new StringBuilder("TAREFAS PENDENTES:\n");
 		StringBuilder concluidas = new StringBuilder("\nTAREFAS CONCLUIDAS:\n");
 		int pendente = 0, concluida = 0;
 		for (int i = 0; i < tarefas.size(); i++) {
-			if (tarefas.get(i).isConcluida()) {
+			if (tarefas.get(i).isStatus()) {
 				concluidas.append(String.format("%d. %s\n", i + 1, tarefas.get(i)));
 				concluida++;
 			} else {
@@ -42,7 +45,7 @@ public class GerenciadorTarefas {
 		if (indice < 0 || indice >= tarefas.size()) {
 			throw new IllegalArgumentException("Índice inválido: tarefa não existe!\n");
 		}
-		if (tarefas.get(indice).isConcluida()) {
+		if (tarefas.get(indice).isStatus()) {
 			throw new IllegalStateException("Tarefa já está concluída!\n");
 		}
 		tarefas.get(indice).marcarConcluida();
@@ -52,7 +55,7 @@ public class GerenciadorTarefas {
 		if (indice < 0 || indice >= tarefas.size()) {
 			throw new IllegalArgumentException("Índice inválido: tarefa não existe!\n");
 		}
-		if (!tarefas.get(indice).isConcluida()) {
+		if (!tarefas.get(indice).isStatus()) {
 			throw new IllegalStateException("Tarefa já está pendente!\n");
 		}
 		tarefas.get(indice).desmarcarConcluida();

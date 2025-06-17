@@ -1,36 +1,69 @@
 package model.entities;
 
 public class Tarefa {
-	private String descricao;
-	private boolean concluida;
+	private Integer id;
+	private String nomeTarefa;
 
-	public Tarefa(String descricao) {
-		if (descricao == null || descricao.isBlank()) {
-			throw new IllegalArgumentException("Descrição não pode ser vazia ou nula!\n");
+	private String descricao;
+	private boolean status;
+
+	public Tarefa() {
+	}
+
+	public Tarefa(String nomeTarefa) {
+		if (nomeTarefa == null || nomeTarefa.isBlank()) {
+			throw new IllegalArgumentException("Título da tarefa não pode ser vazia ou nula!\n");
 		}
+		this.nomeTarefa = nomeTarefa;
+		this.status = false;
+	}
+
+	public Tarefa(String nomeTarefa, String descricao) {
+		if (nomeTarefa == null || nomeTarefa.isBlank()) {
+			throw new IllegalArgumentException("Título da tarefa não pode ser vazia ou nula!\n");
+		}
+
+		this.nomeTarefa = nomeTarefa;
 		this.descricao = descricao;
-		this.concluida = false;
+		this.status = false;
 	}
 
 	public String getDescricao() {
 		return descricao;
 	}
 
-	public boolean isConcluida() {
-		return concluida;
+	public String getNomeTarefa() {
+		return nomeTarefa;
+	}
+
+	public boolean isStatus() {
+		return status;
 	}
 
 	public void marcarConcluida() {
-		concluida = true;
+		status = true;
 	}
 
 	public void desmarcarConcluida() {
-		concluida = false;
+		status = false;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override
 	public String toString() {
-		return descricao.trim();
+		if (descricao == null) {
+			return nomeTarefa.trim().toUpperCase();
+		} else {
+			descricao = descricao.substring(0, 1).toUpperCase().concat(descricao.substring(1));
+			return nomeTarefa.trim().toUpperCase() + ": " + descricao.trim();
+		}
 	}
 
 }
