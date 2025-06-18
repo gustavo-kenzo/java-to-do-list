@@ -3,16 +3,27 @@ package model.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.dao.DaoFactory;
+import model.dao.TarefaDao;
 import model.entities.Tarefa;
 
 public class GerenciadorTarefas {
+	private TarefaDao taskDao = DaoFactory.creatTarefa();
+
 	private List<Tarefa> tarefas = new ArrayList<>();
 
+//ADD
 	public void adicionarTarefa(String nomeTarefa) throws IllegalArgumentException {
-		tarefas.add(new Tarefa(nomeTarefa));
+		Tarefa task = new Tarefa(nomeTarefa);
+		taskDao.insert(task);
+		// tarefas.add(new Tarefa(nomeTarefa));
 	}
+
+//ADD
 	public void adicionarTarefa(String nomeTarefa, String descricao) throws IllegalArgumentException {
-		tarefas.add(new Tarefa(nomeTarefa,descricao));
+		Tarefa task = new Tarefa(nomeTarefa, descricao);
+		taskDao.insert(task);
+		// tarefas.add(new Tarefa(nomeTarefa,descricao));
 	}
 
 	public String listarTarefas() {

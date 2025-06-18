@@ -62,25 +62,23 @@ public class Program {
 			System.out.printf("%d. %s\n", opcao.getCodigo(), opcao.getDescricao());
 		}
 	}
-
-//adicionar funcao de descricao 👍 OBS: caso o usuario deseje add apenas titulo, devera pressionar enter se nao quiser ter descricao
+//OK
 	public static void adicionar(Scanner sc, GerenciadorTarefas gerenciador) {
-		System.out.println("Informações da tarefa: ");
+		System.out.println("INFORMAÇÕES DA TAREFA: ");
 		System.out.print("Título: ");
 		String nomeTarefa = sc.nextLine();
 		System.out.print("Descrição: ");
 		String descricao = sc.nextLine();
 		if (descricao == null || descricao.isBlank()) {
 			gerenciador.adicionarTarefa(nomeTarefa);
-		}
-		else {
-
+		} else {
 			gerenciador.adicionarTarefa(nomeTarefa, descricao);
 		}
 		System.out.println("Tarefa adicionada!\n");
 	}
 
 	public static void marcarConcluida(Scanner sc, GerenciadorTarefas gerenciador) {
+		System.out.println("(CONCLUIR)");
 		System.out.print("Digite o número da tarefa: ");
 		gerenciador.marcarConcluida(sc.nextInt() - 1);
 		System.out.println("Tarefa concluída!\n");
@@ -88,12 +86,14 @@ public class Program {
 
 //tarefa continua ser removida por id, mas agora é o id do banco de dados
 	public static void remover(Scanner sc, GerenciadorTarefas gerenciador) {
+		System.out.println("(REMOVER)");
 		System.out.print("Digite o número da tarefa: ");
 		gerenciador.removerTarefa(sc.nextInt() - 1);
 		System.out.println("Tarefa removida!\n");
 	}
 
 	public static void redefinirStatus(Scanner sc, GerenciadorTarefas gerenciador) {
+		System.out.println("(REDEFINIR)");
 		System.out.print("Digite o número da tarefa: ");
 		gerenciador.desmarcarConcluida(sc.nextInt() - 1);
 		System.out.println("Status redefinido!\n");
