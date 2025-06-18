@@ -69,31 +69,20 @@ public class TarefaDaoJDBC implements TarefaDao {
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override // ALTERACOES FUTURAS
-	public Tarefa findById(Integer id) {
 		PreparedStatement st = null;
-		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT * FROM tasks WHERE id=?");
+			st = conn.prepareStatement("DELETE FROM tasks WHERE id = ?");
 			st.setInt(1, id);
-			rs = st.executeQuery();
-			if (rs.next()) {
-				Tarefa task = new Tarefa();
-				task.setId(id);
-				return task;
-			} else {
-				throw new DbException("Id nao encontrado!");
+			int rows = st.executeUpdate();
+			if (rows == 0) {
+				throw new DbException("Tarefa nao deletada! Id nao existe!");
 			}
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {
-			DB.closeResultSet(rs);
 			DB.closeStatement(st);
 		}
+
 	}
 
 	@Override

@@ -32,12 +32,24 @@ public class Tarefa {
 		return descricao;
 	}
 
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
 	public String getNomeTarefa() {
 		return nomeTarefa;
 	}
 
+	public void setNomeTarefa(String nomeTarefa) {
+		this.nomeTarefa = nomeTarefa;
+	}
+
 	public boolean isStatus() {
 		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 	public void marcarConcluida() {

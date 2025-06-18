@@ -11,8 +11,6 @@ public interface TarefaDao {
 
 	void deleteById(Integer id);
 
-	Tarefa findById(Integer id);
-
 	List<Tarefa> findAll();
 
 }
