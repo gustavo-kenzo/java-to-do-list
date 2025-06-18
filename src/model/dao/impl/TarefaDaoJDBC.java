@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -87,7 +88,28 @@ public class TarefaDaoJDBC implements TarefaDao {
 
 	@Override
 	public List<Tarefa> findAll() {
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT ROW_NUMBER() OVER (ORDER BY createdAt) AS Sequence, TaskName, TaskDescription, TaskStatus FROM tasks");
+			rs = st.executeQuery();
+			List<Tarefa> list = new ArrayList<Tarefa>();
+			while (rs.next()) {
+				Tarefa task = new Tarefa();
+				task.setId(rs.getInt("Sequence"));
+				task.setNomeTarefa(rs.getString("taskName"));
+				task.setDescricao(rs.getString("taskDescription"));
+				task.setStatus(rs.getBoolean("taskStatus"));
+				list.add(task);
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
 	}
 
 }

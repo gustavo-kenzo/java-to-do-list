@@ -71,10 +71,10 @@ public class Tarefa {
 	@Override
 	public String toString() {
 		if (descricao == null) {
-			return nomeTarefa.trim().toUpperCase();
+			return id + "." + nomeTarefa.trim().toUpperCase();
 		} else {
 			descricao = descricao.substring(0, 1).toUpperCase().concat(descricao.substring(1));
-			return nomeTarefa.trim().toUpperCase() + ": " + descricao.trim();
+			return id + "." + nomeTarefa.trim().toUpperCase() + ": " + descricao.trim();
 		}
 	}
 
