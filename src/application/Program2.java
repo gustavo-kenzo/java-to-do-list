@@ -10,13 +10,13 @@ import model.entities.Tarefa;
 public class Program2 {
 
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
 		TarefaDao td = DaoFactory.creatTarefa();
-		List<Tarefa> list = td.findAll();
+		Scanner sc = new Scanner(System.in);
+		List<Tarefa>list = td.findAll();
 		for (Tarefa obj : list) {
-
 			System.out.println(obj);
 		}
+//		
 //INSERT OK
 //		System.out.println("ADICIONAR");
 //		System.out.println("Informações da tarefa: ");
@@ -54,11 +54,17 @@ public class Program2 {
 		// gerenciador.removerTarefa(sc.nextInt() - 1);
 		System.out.println("Tarefa removida!\n");
 //FINDALL
+//		list = td.findAll();
+//		for (Tarefa obj : list) {
+//
+//			System.out.println(obj);
+//		}
 		list = td.findAll();
 		for (Tarefa obj : list) {
 
 			System.out.println(obj);
 		}
+		System.out.println(td.findIdByRowNumber(2));
 	}
 
 }

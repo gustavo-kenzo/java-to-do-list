@@ -12,14 +12,12 @@ public class GerenciadorTarefas {
 
 	private List<Tarefa> tarefas = new ArrayList<>();
 
-//ADD
 	public void adicionarTarefa(String nomeTarefa) throws IllegalArgumentException {
 		Tarefa task = new Tarefa(nomeTarefa);
 		taskDao.insert(task);
 		// tarefas.add(new Tarefa(nomeTarefa));
 	}
 
-//ADD
 	public void adicionarTarefa(String nomeTarefa, String descricao) throws IllegalArgumentException {
 		Tarefa task = new Tarefa(nomeTarefa, descricao);
 		taskDao.insert(task);
@@ -52,34 +50,33 @@ public class GerenciadorTarefas {
 		return pendentes.append(concluidas).toString();
 	}
 
-	public void marcarConcluida(int indice) {
-		if (indice < 0 || indice >= tarefas.size()) {
+	public void marcarConcluida(int id) {
+		if (id < 0 || id >= tarefas.size()) {
 			throw new IllegalArgumentException("Índice inválido: tarefa não existe!\n");
 		}
-		if (tarefas.get(indice).isStatus()) {
+		if (tarefas.get(id).isStatus()) {
 			throw new IllegalStateException("Tarefa já está concluída!\n");
 		}
-		tarefas.get(indice).marcarConcluida();
+		tarefas.get(id).marcarConcluida();
 	}
 
-	public void desmarcarConcluida(int indice) {
-		if (indice < 0 || indice >= tarefas.size()) {
+	public void desmarcarConcluida(int id) {
+		if (id < 0 || id >= tarefas.size()) {
 			throw new IllegalArgumentException("Índice inválido: tarefa não existe!\n");
 		}
-		if (!tarefas.get(indice).isStatus()) {
+		if (!tarefas.get(id).isStatus()) {
 			throw new IllegalStateException("Tarefa já está pendente!\n");
 		}
-		tarefas.get(indice).desmarcarConcluida();
+		tarefas.get(id).desmarcarConcluida();
 	}
 
-	public void removerTarefa(int indice) {
-		if (tarefas.isEmpty()) {
-			throw new IllegalStateException("Não há tarefas para remover!\n");
+	public void removerTarefa(Integer id) {
+		Integer idTrue = taskDao.findIdByRowNumber(id);
+		if (idTrue == null) {
+			throw new IllegalArgumentException("ID inválido: tarefa não existe!\n");
 		}
-		if (indice < 0 || indice >= tarefas.size()) {
-			throw new IllegalArgumentException("Índice inválido: tarefa não existe!\n");
-		}
-		tarefas.remove(indice);
+		taskDao.deleteById(idTrue);
+		// tarefas.remove(id);
 
 	}
 }

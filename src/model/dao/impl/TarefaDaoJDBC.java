@@ -112,4 +112,26 @@ public class TarefaDaoJDBC implements TarefaDao {
 		}
 	}
 
+	@Override
+	public Integer findIdByRowNumber(int rowNumber) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"WITH numeradas AS " + "(SELECT id, ROW_NUMBER() OVER (ORDER BY createdAt) AS seq " + "FROM tasks) "
+							+ "SELECT id FROM numeradas WHERE seq = ?");
+			st.setInt(1, rowNumber);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("id");
+			}
+			return null;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(st);
+		}
+	}
+
 }

@@ -13,4 +13,6 @@ public interface TarefaDao {
 
 	List<Tarefa> findAll();
 
+	Integer findIdByRowNumber(int rowNumber);
+
 }

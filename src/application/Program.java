@@ -1,8 +1,12 @@
 package application;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
+import model.dao.DaoFactory;
+import model.dao.TarefaDao;
+import model.entities.Tarefa;
 import model.enums.OpcaoMenu;
 import model.services.GerenciadorTarefas;
 
@@ -28,7 +32,13 @@ public class Program {
 					adicionar(sc, gerenciador);
 					break;
 				case LISTAR:
-					System.out.println(gerenciador.listarTarefas());
+					TarefaDao td = DaoFactory.creatTarefa();
+					List<Tarefa> list = td.findAll();
+					for (Tarefa obj : list) {
+						System.out.println(obj);
+					}
+					System.out.println();
+					// System.out.println(gerenciador.listarTarefas());
 					break;
 				case MARCAR_CONCLUIDA:
 					marcarConcluida(sc, gerenciador);
@@ -62,6 +72,7 @@ public class Program {
 			System.out.printf("%d. %s\n", opcao.getCodigo(), opcao.getDescricao());
 		}
 	}
+
 //OK
 	public static void adicionar(Scanner sc, GerenciadorTarefas gerenciador) {
 		System.out.println("INFORMAÇÕES DA TAREFA: ");
@@ -88,7 +99,7 @@ public class Program {
 	public static void remover(Scanner sc, GerenciadorTarefas gerenciador) {
 		System.out.println("(REMOVER)");
 		System.out.print("Digite o número da tarefa: ");
-		gerenciador.removerTarefa(sc.nextInt() - 1);
+		gerenciador.removerTarefa(sc.nextInt());
 		System.out.println("Tarefa removida!\n");
 	}
 
