@@ -1,12 +1,9 @@
 package application;
 
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
 
-import model.dao.DaoFactory;
-import model.dao.TarefaDao;
-import model.entities.Tarefa;
+import db.DB;
 import model.enums.OpcaoMenu;
 import model.services.GerenciadorTarefas;
 
@@ -32,13 +29,7 @@ public class Program {
 					adicionar(sc, gerenciador);
 					break;
 				case LISTAR:
-					TarefaDao td = DaoFactory.creatTarefa();
-					List<Tarefa> list = td.findAll();
-					for (Tarefa obj : list) {
-						System.out.println(obj);
-					}
-					System.out.println();
-					// System.out.println(gerenciador.listarTarefas());
+					System.out.println(gerenciador.listarTarefas());
 					break;
 				case MARCAR_CONCLUIDA:
 					marcarConcluida(sc, gerenciador);
@@ -52,6 +43,7 @@ public class Program {
 				case SAIR:
 					System.out.println("SAINDO...");
 					sc.close();
+					DB.closeConnection();
 					return;
 				}
 			} catch (InputMismatchException e) {
@@ -91,7 +83,7 @@ public class Program {
 	public static void marcarConcluida(Scanner sc, GerenciadorTarefas gerenciador) {
 		System.out.println("(CONCLUIR)");
 		System.out.print("Digite o número da tarefa: ");
-		gerenciador.marcarConcluida(sc.nextInt() - 1);
+		gerenciador.marcarConcluida(sc.nextInt());
 		System.out.println("Tarefa concluída!\n");
 	}
 
@@ -106,7 +98,7 @@ public class Program {
 	public static void redefinirStatus(Scanner sc, GerenciadorTarefas gerenciador) {
 		System.out.println("(REDEFINIR)");
 		System.out.print("Digite o número da tarefa: ");
-		gerenciador.desmarcarConcluida(sc.nextInt() - 1);
+		gerenciador.desmarcarConcluida(sc.nextInt());
 		System.out.println("Status redefinido!\n");
 	}
 

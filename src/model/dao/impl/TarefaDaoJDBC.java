@@ -10,6 +10,7 @@ import java.util.List;
 
 import db.DB;
 import db.DbException;
+import db.DbIntegrityException;
 import model.dao.TarefaDao;
 import model.entities.Tarefa;
 
@@ -36,6 +37,7 @@ public class TarefaDaoJDBC implements TarefaDao {
 					int id = rs.getInt(1);
 					obj.setId(id);
 				}
+				DB.closeResultSet(rs);
 			} else {
 				throw new DbException("Erro ao inserir nova tarefa!");
 			}
@@ -57,7 +59,7 @@ public class TarefaDaoJDBC implements TarefaDao {
 			st.setInt(2, obj.getId());
 			int rows = st.executeUpdate();
 			if (rows == 0) {
-				throw new DbException("Erro ao atualizar! Id não encontrado!");
+				throw new DbException("Erro ao atualizar! Id não encontrado!\n");
 			}
 
 		} catch (SQLException e) {
@@ -79,7 +81,7 @@ public class TarefaDaoJDBC implements TarefaDao {
 				throw new DbException("Tarefa nao deletada! Id nao existe!");
 			}
 		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
+			throw new DbIntegrityException("Erro de integridade: " + e.getMessage());
 		} finally {
 			DB.closeStatement(st);
 		}
