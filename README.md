@@ -29,6 +29,9 @@ Um aplicativo de console em Java para gerenciar tarefas, com suporte a adicionar
 ## Tecnologias
 - ![Java](https://img.shields.io/badge/Java-17+-blue)
 - Git para controle de versão
+- MySQL
+- JDBC
+- Eclipse
 
 ## Contribuições
 Sinta-se à vontade para abrir issues ou pull requests!
