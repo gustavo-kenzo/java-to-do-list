@@ -65,7 +65,6 @@ public class Program {
 		}
 	}
 
-//OK
 	public static void adicionar(Scanner sc, GerenciadorTarefas gerenciador) {
 		System.out.println("INFORMAÇÕES DA TAREFA: ");
 		System.out.print("Título: ");
@@ -87,7 +86,6 @@ public class Program {
 		System.out.println("Tarefa concluída!\n");
 	}
 
-//tarefa continua ser removida por id, mas agora é o id do banco de dados
 	public static void remover(Scanner sc, GerenciadorTarefas gerenciador) {
 		System.out.println("(REMOVER)");
 		System.out.print("Digite o número da tarefa: ");
