@@ -1,86 +1,81 @@
 package com.gustavo.todo_list.model.services;
 
-import java.util.List;
-
 import com.gustavo.todo_list.model.dao.DaoFactory;
 import com.gustavo.todo_list.model.dao.TarefaDao;
 import com.gustavo.todo_list.model.entities.Tarefa;
 
+import java.util.List;
+
 public class GerenciadorTarefas {
-	private final TarefaDao taskDao = DaoFactory.creatTarefa();
+    private final TarefaDao taskDao = DaoFactory.creatTarefa();
 
-	public void adicionarTarefa(String nomeTarefa) throws IllegalArgumentException {
-		Tarefa task = new Tarefa(nomeTarefa);
-		taskDao.insert(task);
-	}
+    public void adicionarTarefa(String nomeTarefa) throws IllegalArgumentException {
+        Tarefa task = new Tarefa(nomeTarefa);
+        taskDao.insert(task);
+    }
 
-	public void adicionarTarefa(String nomeTarefa, String descricao) throws IllegalArgumentException {
-		Tarefa task = new Tarefa(nomeTarefa, descricao);
-		taskDao.insert(task);
-	}
+    public void adicionarTarefa(String nomeTarefa, String descricao) throws IllegalArgumentException {
+        Tarefa task = new Tarefa(nomeTarefa, descricao);
+        taskDao.insert(task);
+    }
 
-	public String listarTarefas() {
-		List<Tarefa> list = taskDao.findAll();
-		if (list == null || list.isEmpty()) {
-			return "\nNão há tarefas\n";
-		}
-		StringBuilder pendentes = new StringBuilder("TAREFAS PENDENTES:\n");
-		StringBuilder concluidas = new StringBuilder("\nTAREFAS CONCLUIDAS:\n");
-		int pendente = 0, concluida = 0;
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).isStatus()) {
-				concluidas.append(String.format("%s\n", list.get(i)));
-				concluida++;
-			} else {
-				pendentes.append(String.format("%s\n", list.get(i)));
-				pendente++;
-			}
-		}
-		if (pendente == 0) {
-			pendentes.append("Nenhuma tarefa pendente!\n");
-		}
-		if (concluida == 0) {
-			concluidas.append("Nenhuma tarefa concluída!\n");
-		}
+    public String listarTarefas() {
+        List<Tarefa> list = taskDao.findAll();
+        if (list == null || list.isEmpty()) {
+            return "\nNão há tarefas\n";
+        }
+        StringBuilder pendentes = new StringBuilder("TAREFAS PENDENTES:\n");
+        StringBuilder concluidas = new StringBuilder("\nTAREFAS CONCLUIDAS:\n");
+        int pendente = 0, concluida = 0, ordem = 1;
+        for (Tarefa tarefa : list) {
+            String linha = String.format("%d. %s\n", ordem++, tarefa);
+            if (tarefa.isStatus()) {
+                concluidas.append(linha);
+                concluida++;
+            } else {
+                pendentes.append(linha);
+                pendente++;
+            }
+        }
+        if (pendente == 0) {
+            pendentes.append("Nenhuma tarefa pendente!\n");
+        }
+        if (concluida == 0) {
+            concluidas.append("Nenhuma tarefa concluída!\n");
+        }
 
-		return pendentes.append(concluidas).toString();
-	}
+        return pendentes.append(concluidas).toString();
+    }
 
-	public void marcarConcluida(Integer id) {
+    public void marcarConcluida(Integer visualId) {
+        mudarStatus(visualId, true);
+    }
 
-		Integer idTrue = taskDao.findIdByRowNumber(id);
-		List<Tarefa> list = taskDao.findAll();
-		if (id <= 0 || id > list.size()) {
-			throw new IllegalArgumentException("ID inválido: tarefa não existe!\n");
-		}
-		if (list.get(id - 1).isStatus()) {
-			throw new IllegalStateException("Tarefa já está concluída!\n");
-		}
-		list.get(id - 1).setId(idTrue);
-		list.get(id - 1).setStatus(true);
-		taskDao.update(list.get(id - 1));
-	}
+    public void desmarcarConcluida(Integer visualId) {
+        mudarStatus(visualId, false);
+    }
 
-	public void desmarcarConcluida(Integer id) {
-		Integer idTrue = taskDao.findIdByRowNumber(id);
-		List<Tarefa> list = taskDao.findAll();
+    public void removerTarefa(Integer visualId) {
+        Tarefa tarefaRemover = getTarefaVisualId(visualId);
+        taskDao.delete(tarefaRemover);
+    }
 
-		if (id <= 0 || id > list.size()) {
-			throw new IllegalArgumentException("ID inválido: tarefa não existe!\n");
-		}
-		if (!list.get(id - 1).isStatus()) {
-			throw new IllegalStateException("Tarefa já está pendente!\n");
-		}
-		list.get(id - 1).setId(idTrue);
-		list.get(id - 1).setStatus(false);
-		taskDao.update(list.get(id - 1));
-	}
+    private Tarefa getTarefaVisualId(Integer visualId) {
+        List<Tarefa> list = taskDao.findAll();
+        if (visualId <= 0 || visualId > list.size()) {
+            throw new IllegalArgumentException("ID inválido: tarefa não existe!\n");
+        }
+        return list.get(visualId - 1);
+    }
 
-	public void removerTarefa(Integer id) {
-		Integer idTrue = taskDao.findIdByRowNumber(id);
-		if (idTrue == null) {
-			throw new IllegalArgumentException("ID inválido: tarefa não existe!\n");
-		}
-		taskDao.deleteById(idTrue);
-	}
+    private void mudarStatus(Integer visualId, boolean status) {
+        Tarefa tarefa = getTarefaVisualId(visualId);
+
+        if (tarefa.isStatus() == status) {
+            throw new IllegalStateException(status ? "Tarefa já está concluída!\n" : "Tarefa já está pendente!\n");
+        }
+
+        tarefa.setStatus(status);
+        taskDao.update(tarefa);
+    }
 }

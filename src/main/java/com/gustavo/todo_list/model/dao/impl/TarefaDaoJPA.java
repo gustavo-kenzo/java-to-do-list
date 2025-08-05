@@ -1,7 +1,6 @@
 package com.gustavo.todo_list.model.dao.impl;
 
 import com.gustavo.todo_list.db.DbException;
-import com.gustavo.todo_list.db.DbIntegrityException;
 import com.gustavo.todo_list.model.dao.TarefaDao;
 import com.gustavo.todo_list.model.entities.Tarefa;
 import com.gustavo.todo_list.util.JPAUtil;
@@ -56,7 +55,7 @@ public class TarefaDaoJPA implements TarefaDao {
         EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
-            Tarefa tarefa = em.find(Tarefa.class,obj.getId());
+            Tarefa tarefa = em.find(Tarefa.class, obj.getId());
             if (tarefa != null) {
                 em.remove(tarefa);
             }
