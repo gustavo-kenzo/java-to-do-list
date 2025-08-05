@@ -1,18 +1,15 @@
 package com.gustavo.todo_list.model.dao;
 
-import java.util.List;
-
 import com.gustavo.todo_list.model.entities.Tarefa;
 
+import java.util.List;
+
 public interface TarefaDao {
-	void insert(Tarefa obj);
+    void insert(Tarefa obj);
 
-	void update(Tarefa obj);
+    void update(Tarefa obj);
 
-	void deleteById(Integer id);
+    void delete(Tarefa obj);
 
-	List<Tarefa> findAll();
-
-	Integer findIdByRowNumber(int rowNumber);
-
+    List<Tarefa> findAll();
 }
