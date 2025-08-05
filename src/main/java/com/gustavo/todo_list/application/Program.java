@@ -14,7 +14,7 @@ public class Program {
 
         Scanner sc = new Scanner(System.in);
         GerenciadorTarefas gerenciador = new GerenciadorTarefas();
-        int codigo = 0;
+        int codigo;
         while (true) {
             MenuConsole.exibirMenu();
             System.out.print("Escolha uma opção: ");
