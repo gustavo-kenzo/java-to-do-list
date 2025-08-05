@@ -1,9 +1,9 @@
 package com.gustavo.todo_list.application;
 
 import com.gustavo.todo_list.application.UI.MenuConsole;
-import com.gustavo.todo_list.db.DB;
 import com.gustavo.todo_list.model.enums.OpcaoMenu;
 import com.gustavo.todo_list.model.services.GerenciadorTarefas;
+import com.gustavo.todo_list.util.JPAUtil;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -44,7 +44,7 @@ public class Program {
                     case SAIR:
                         System.out.println("SAINDO...");
                         sc.close();
-                        DB.closeConnection();
+                        JPAUtil.closeEntityManagerFactory();
                         return;
                 }
             } catch (InputMismatchException e) {
