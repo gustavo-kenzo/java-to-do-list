@@ -1,10 +1,10 @@
 package com.gustavo.todo_list.model.dao;
 
-import com.gustavo.todo_list.db.DB;
-import com.gustavo.todo_list.model.dao.impl.TarefaDaoJDBC;
+import com.gustavo.todo_list.model.dao.impl.TarefaDaoJPA;
+import com.gustavo.todo_list.util.JPAUtil;
 
 public class DaoFactory {
     public static TarefaDao creatTarefa() {
-        return new TarefaDaoJDBC(DB.getConnection());
+        return new TarefaDaoJPA(JPAUtil.getEntityManager());
     }
 }
